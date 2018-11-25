@@ -1,0 +1,3 @@
+# file: ansible-role-irony/tasks/main.yml
+
+- include: 'irony_install.yml'
