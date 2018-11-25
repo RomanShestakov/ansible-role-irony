@@ -13,7 +13,6 @@
     path: "{{ irony_build_dir }}"
     state: directory
 
- # fixme - figure out how to detect clang resource directory
 - name: IRONY | run cmake
   become: true
   command: chdir="{{ irony_build_dir }}" cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=1 \
