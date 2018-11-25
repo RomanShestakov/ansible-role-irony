@@ -3,7 +3,7 @@
 - name: IRONY | get from git repository
   become: true
   git: repo="{{ irony_repo_url }}"
-       dest="{{ irony_tmp }}_{{ irony_version }}"
+       dest="{{ irony_tmp }}"
        version="{{ irony_version }}"
   register: irony_downloaded
 
@@ -26,7 +26,7 @@
            -DCMAKE_INSTALL_RPATH={{llvm_install_dir}}/lib \
            -DCMAKE_INSTALL_RPATH_USE_LINK_PATH=TRUE \
            -DCMAKE_BUILD_TYPE=Release \
-           "{{ irony_tmp }}\server"
+           "{{ irony_tmp }}/server"
   when: irony_downloaded.changed
 
 - name: IRONY | make
