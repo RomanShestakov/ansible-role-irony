@@ -43,9 +43,9 @@
 - name: IRONY | make install el
   become: true
   copy:
-    remote_src=True
     src: "{{ item }}"
     dest: "{{irony_install_dir}}/share/emacs/site-list/"
+    remote_src: yes
   with_fileglob:
     - "{{ irony_tmp }}/*.el"
   when: irony_downloaded.changed
