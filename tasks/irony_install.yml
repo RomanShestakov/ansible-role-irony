@@ -30,6 +30,13 @@
            "{{ irony_tmp }}/server"
   when: irony_downloaded.changed
 
+- name: IRONY | create install path
+  become: true
+  file:
+    path: "{{irony_install_dir}}/share/emacs/site-lisp/"
+    state: directory
+  when: irony_downloaded.changed
+
 - name: IRONY | make
   become: true
   command: chdir="{{ irony_build_dir }}" make
@@ -40,12 +47,12 @@
   command: chdir="{{ irony_build_dir }}" make install
   when: irony_downloaded.changed
 
-- name: IRONY | make install el
-  become: true
-  copy:
-    src: "{{ item }}"
-    dest: "{{irony_install_dir}}/share/emacs/site-list/"
-    remote_src: yes
-  with_fileglob:
-    - "{{ irony_tmp }}/*.el"
+- name: IRONY | get lisp that needs to be installed
+  shell: find {{ irony_tmp }} -name ".el" -prune -o -print
+  register: irony_lisp_names
   when: irony_downloaded.changed
+
+- name: IRONY | install lisp files
+  command: cp {{ item }} "{{irony_install_dir}}/share/emacs/site-lisp/"
+  with_items: "{{ irony_lisp_names.stdout_lines }}"
+  when: irony_list.changed
