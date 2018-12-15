@@ -30,6 +30,13 @@
            "{{ irony_tmp }}/server"
   when: irony_downloaded.changed
 
+- name: IRONY | create install path
+  become: true
+  file:
+    path: "{{irony_install_dir}}/share/emacs/site-list/"
+    state: directory
+  when: irony_downloaded.changed
+
 - name: IRONY | make
   become: true
   command: chdir="{{ irony_build_dir }}" make
@@ -42,9 +49,5 @@
 
 - name: IRONY | make install el
   become: true
-  copy:
-    src: "{{ item }}"
-    dest: "{{irony_install_dir}}/share/emacs/site-list/"
-  with_fileglob:
-    - "{{ irony_tmp }}/*.el"
+  command: chdir="{{ irony_tmp }}" cp *.el "{{irony_install_dir}}/share/emacs/site-list/"
   when: irony_downloaded.changed
