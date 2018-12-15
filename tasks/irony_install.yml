@@ -39,3 +39,12 @@
   become: true
   command: chdir="{{ irony_build_dir }}" make install
   when: irony_downloaded.changed
+
+- name: IRONY | make install el
+  become: true
+  copy:
+    src: "{{ item }}"
+    dest: "{{irony_install_dir}}/share/emacs/site-list/"
+  with_fileglob:
+    - "{{ irony_tmp }}/*.el"
+  when: irony_downloaded.changed
