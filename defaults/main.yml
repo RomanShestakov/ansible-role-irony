@@ -3,7 +3,7 @@
 irony_repo_url: https://github.com/Sarcasm/irony-mode.git
 irony_version: v1.2.0
 irony_tmp: "/tmp/irony"
-irony_build_dir: /tmp/irony_build_dir"
+irony_build_dir: "/tmp/irony_build_dir"
 irony_install_dir: "/opt/irony-{{irony_version}}"
 llvm_version: 4.0
 llvm_install_dir: "/opt/llvm-{{llvm_version}}"
