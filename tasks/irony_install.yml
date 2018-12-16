@@ -33,7 +33,7 @@
 - name: IRONY | create install path
   become: true
   file:
-    path: "{{irony_install_dir}}/share/emacs/site-lisp/"
+    path: "{{irony_install_dir}}/share/emacs/site-lisp/irony"
     state: directory
   when: irony_downloaded.changed
 
@@ -53,6 +53,6 @@
   when: irony_downloaded.changed
 
 - name: IRONY | install lisp files
-  command: cp {{ item }} "{{irony_install_dir}}/share/emacs/site-lisp/"
+  command: cp {{ item }} "{{irony_install_dir}}/share/emacs/site-lisp/irony/"
   with_items: "{{ irony_lisp_names.stdout_lines }}"
   when: irony_lisp_names
