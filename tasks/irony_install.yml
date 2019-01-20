@@ -56,3 +56,9 @@
   command: cp {{ item }} "{{irony_install_dir}}/share/emacs/site-lisp/irony/"
   with_items: "{{ irony_lisp_names.stdout_lines }}"
   when: irony_lisp_names
+
+- name: IRONY | Add to global PATH and set IRONY_ROOT env var
+  become: true
+  action: template src=irony.sh-template.j2
+          dest="/etc/profile.d/irony.sh"
+          mode=0644
